@@ -1,46 +1,26 @@
-# fastASSET: Fast ASSET using pre-screening
+# fastASSET Wonlab version
 
-fastASSET is an R package for joint genetic association analysis across a large number of traits. It is an accelerated version of the *as*sociation analysis based on sub*set*s (ASSET) method (Bhattacharjee et al, AJHG 2012). The input is GWAS summary statistics for one genetic variant across multiple traits, and the output is a p-value for global association and a list of associated traits. fastASSET accelerates the computation by restricting subset search among the traits with suggestive level of associations, defined by a liberal p-value threshold. 
+ 기존 `fastASSET` README는 [here](./README_ori.md).
 
-See the original `ASSET` R package for more information: <https://bioconductor.org/packages/release/bioc/html/ASSET.html>
+원래 `ASSET`이라는 R package가 Bioconductor에서 제공을 함 ([here](https://bioconductor.org/packages/release/bioc/html/ASSET.html)).  
+하지만, 이 package에서 제공하는 ASSET을 돌릴 수 있는 function은 `h.traits()` 인데, 이녀석은 computationally slow 하다는 것이 단점.  
+그래서, `https://github.com/gqi/fastASSET` 여기에서, `fast_asset()`이라는 function을 만듬.  
+*(지금은 기존 ASSET R package에 이 `fast_asset()` function이 incorporate 되어있음.) -> 하지만 github에 있는 version으로 다운로드 받는 걸 추천. 왜냐하면 R package로 다운로드 받으면 example data가 없는데, GitHub version 다운로드 받으면 `data`폴더에 example data가 있음.*  
 
-### Installation
+`fast_asset()`은 더 빨라질 수 있었던 이유가:  
+- effective sample size를 direct하게 input으로 넣을 수 있어서. (`h.traits()`은 number of case, control 각각 넣어서 따로 계산을 해주는 process가 필요함.)
 
-There are two ways to install `fastASSET`:
+Wonlab 용 `fast_asset()` -> `fast_asset_wonlab()`을 따로 만든 이유:
+- `fast_asset()`이 two-sided test만 할 수 있도록 고정되어있음.
+- `ASSET`을 활용한 Meta-analysis를 할 수 없게 코드가 짜져있음.
 
-1. `fastASSET` has been incorporated into the latest version of the main `ASSET` package. First install `devtools` by 
-
-```
-install.packages("devtools")
-```
-
-and then install the latest version of `ASSET` by
-
-```
-devtools::install_github("sbstatgen/ASSET")
-```
-
-To load the package and view instructions, type
+---
+## 설치하기
 
 ```
-library(ASSET)
-?fast_asset
+devtools::install_github("sanghyeonp/fastASSET_wonlab")
 ```
 
-2. For the latest developmental version of `fastASSET`, install `devtools` and `ASSET` as in option 1, then install
-
-```
-devtools::install_github("gqi/fastASSET")
-```
-
-Call the function by `fastASSET::fast_asset()` to access the latest version.
-
-### Reference
-
-If you use this package or other custom scripts from this repository, please cite:
-
-Qi, G., Chhetri, S. B., Ray, D., Dutta, D., Battle, A., Bhattacharjee, S.\*, & Chatterjee, N.\* (2022). Genome-Wide Large-Scale Multi-Trait Analysis Characterizes Global Patterns of Pleiotropy and Unique Trait-Specific Variants. bioRxiv.
-
-*Corresponding authors.
-
-See folders `simulations` and `analysis` for other custom scripts used in the paper.	
+---
+Reference:
+- Qi, G., Chhetri, S. B., Ray, D., Dutta, D., Battle, A., Bhattacharjee, S.\*, & Chatterjee, N.\* (2022). Genome-Wide Large-Scale Multi-Trait Analysis Characterizes Global Patterns of Pleiotropy and Unique Trait-Specific Variants. bioRxiv.
