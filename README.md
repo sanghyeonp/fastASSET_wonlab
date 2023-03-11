@@ -25,6 +25,7 @@ devtools::install_github("sanghyeonp/fastASSET_wonlab")
 ## 새로운 function 만들고 적용 방법
 Step 1. Function 만들고  
 Step 2. Function에 대한 roxygen comment를 달고  
+- 참고: https://kbroman.org/pkg_primer/pages/docs.html
 Step 3. Root package directory에서 R 세션 실행 후  
 Step 4. 아래 commend 실행  
 ```
