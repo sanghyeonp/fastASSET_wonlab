@@ -157,7 +157,6 @@ fast_asset <- function(snp, traits.lab, beta.hat, sigma.hat, Neff, cor, block, s
     return(res.asset)
 }
 
-
 #' Fast ASSET using pre-screening
 #' @description This function implements a fast version of ASSET for analysis of a large number of traits. It accelerates the computation by restricting subset search among the traits with suggestive level of associations. The traits are selected by a liberal p-value threshold. The input is GWAS summary statistics for one SNP. See details for more information.
 #' @param snp A character string giving the SNP name to be analyzed. No default.
@@ -182,7 +181,6 @@ fast_asset <- function(snp, traits.lab, beta.hat, sigma.hat, Neff, cor, block, s
 #' block <- create_blocks(ldscintmat)
 #' test <- fast_asset(snp=SNP, traits.lab=traits, beta.hat=betahat, sigma.hat=SE,
 #' Neff=Neff, cor=ldscintmat, block=block, scr_pthr=0.05)
-#' @import ASSET
 #' @export
 fast_asset_wonlab <- function(snp, traits.lab, beta.hat, sigma.hat, Neff, cor, block, side, search, scr_pthr=0.05){
     ind <- (!is.na(beta.hat)) & (!is.na(sigma.hat))
