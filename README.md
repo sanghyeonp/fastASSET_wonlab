@@ -17,23 +17,30 @@ Wonlab 용 `fast_asset()` -> `fast_asset_wonlab()`을 따로 만든 이유:
 ---
 ## 설치하기
 
+먼저 `ASSET` package가 있어야 하기 때문에,
+```
+devtools::install_github("sbstatgen/ASSET")
+```
+그리고 `fastASSET` modified version 설치하기. 
 ```
 devtools::install_github("sanghyeonp/fastASSET_wonlab")
 ```
 
 ---
 ## 새로운 function 만들고 적용 방법
-Step 1. Function 만들고  
-Step 2. Function에 대한 roxygen comment를 달고  
-- 참고: https://kbroman.org/pkg_primer/pages/docs.html
+Step 1. 새로운 function을 만들기 위해서 `/R` 폴더에 새로운 function에 대한 R script 작성
+Step 2. Function script에 roxygen comment를 달고  
+- 참고: https://kbroman.org/pkg_primer/pages/docs.html  
+- 참고: https://www.paulamoraga.com/blog/2022/04/12/2022-04-12-rpackages/  
 Step 3. Root package directory에서 R 세션 실행 후  
 Step 4. 아래 commend 실행  
 ```
-library(devtools)
-document()
+> library(devtools)
+> document()
+> check()
 ```
-Step 5. Git push to repository  
-Step 6. Install!
+Step 5. `check()`에서 문제가 없는 것을 확인했으면, push to git repository  
+Step 6. R에서 install package with new function using `devtools`
 
 ---
 Reference:
