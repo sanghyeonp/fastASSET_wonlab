@@ -99,7 +99,7 @@ scr_transform = function(betahat, SE, SNP, traits_i, cor, block, Neff, scr_pthr 
 #' @param search search
 #' @param scr_pthr P-value threshold for pre-screening. Only traits with p-value < scr_pthr are retained. Default to 0.05.
 #'
-#' @details The standard ASSET (\code{h.traits}) which searches through all subsets can be computationally intractable for analyzing a large number of traits. \code{fast_asset} reduces the computational burden by the following procedure: (1) De-correlate the z-statistics associated with different traits using the correlation matrix (\code{cor}); (2) select the set of traits using a liberal threshold (p<0.05 by default) of the de-correlated z-statistics; (3) adjust the de-correlated z-statistics for the pre-selection independently across different traits; (4) re-introduce the correlation using the matrix \code{cor} and supply the adjusted statistics to standard ASSET.
+#' @details The standard ASSET (\code{h.traits}) which searches through all subsets can be computationally intractable for analyzing a large number of traits. \code{fast_asset_wonlab} reduces the computational burden by the following procedure: (1) De-correlate the z-statistics associated with different traits using the correlation matrix (\code{cor}); (2) select the set of traits using a liberal threshold (p<0.05 by default) of the de-correlated z-statistics; (3) adjust the de-correlated z-statistics for the pre-selection independently across different traits; (4) re-introduce the correlation using the matrix \code{cor} and supply the adjusted statistics to standard ASSET.
 #'
 #' @return A list of the same format as the output of \code{h.traits}.
 #'
@@ -108,7 +108,7 @@ scr_transform = function(betahat, SE, SNP, traits_i, cor, block, Neff, scr_pthr 
 #' @examples
 #' data("example_rs6678982", package="fastASSET")
 #' block <- create_blocks(ldscintmat)
-#' test <- fast_asset(snp=SNP, traits.lab=traits, beta.hat=betahat, sigma.hat=SE,
+#' test <- fast_asset_wonlab(snp=SNP, traits.lab=traits, beta.hat=betahat, sigma.hat=SE,
 #' Neff=Neff, cor=ldscintmat, block=block, scr_pthr=0.05)
 #' @import ASSET
 #' @export
