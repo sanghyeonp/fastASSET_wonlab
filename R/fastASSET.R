@@ -157,6 +157,54 @@ fast_asset <- function(snp, traits.lab, beta.hat, sigma.hat, Neff, cor, block, s
     return(res.asset)
 }
 
+fast_asset_wonlab <- function(snp, traits.lab, beta.hat, sigma.hat, Neff, cor, block, side, search, scr_pthr=0.05){
+    ind <- (!is.na(beta.hat)) & (!is.na(sigma.hat))
+    beta.hat <- beta.hat[ind]
+    sigma.hat <- sigma.hat[ind]
+    Neff <- Neff[ind]
+    traits_i <- traits.lab[ind]
+    names(beta.hat) <- names(sigma.hat) <- names(Neff) <- traits_i
+
+    # Pre-screening is only implemented when data for >=2 traits are available
+    if (sum(ind)>=2){
+        cormat <- cor[ind,ind]
+        rownames(cormat) <- colnames(cormat) <- traits_i
+
+        # Pre-screen and adjust the summary statistics
+        dt_scr <- scr_transform(betahat=beta.hat, SE=sigma.hat, SNP=snp, traits_i=traits_i,
+                                cor = cormat, block, Neff=Neff, scr_pthr = 0.05)
+        if (sum(dt_scr$betahat_orth>0)>16 | sum(dt_scr$betahat_orth<=0)>16){
+            print("Too many traits passed pre-screening, subset search can be slow. Consider using a lower scr_pthr.")
+        }
+
+        betahat_orth <- dt_scr$betahat_orth
+        sigma_orth <- dt_scr$sigma_orth
+        traits_i <- names(betahat_orth)
+        rm(dt_scr)
+
+        if (length(traits_i)>=2){
+            res.asset <- h.traits(snp.vars=snp, traits.lab=traits_i,
+                                 beta.hat=betahat_orth, sigma.hat=sigma_orth, ncase=2/sigma_orth^2,
+                                 ncntl=2/sigma_orth^2, cor=cormat[traits_i,traits_i],
+                                 side=side, search=search, cor.numr = FALSE)
+        } else if (length(traits_i)==1){
+            res.asset <- h.traits(snp.vars=snp, traits.lab=traits_i,
+                                 beta.hat=betahat_orth, sigma.hat=sigma_orth, ncase=2/sigma_orth^2,
+                                 ncntl=2/sigma_orth^2, side=side, search=search)
+        } else if (length(traits_i)==0){
+            stop("No trait passed pre-screening. Use a higher scr_pthr or standard ASSET.")
+        }
+    } else if (sum(ind)==1){
+        res.asset <- h.traits(snp.vars=SNP, traits.lab=traits_i,
+                             beta.hat=beta.hat, sigma.hat=sigma.hat, ncase=2/sigma.hat^2,
+                             ncntl=2/sigma.hat^2, side=side, search=search)
+    } else{
+        stop("Data are missing for every trait.")
+    }
+
+    return(res.asset)
+}
+
 #' Create blocks from correlation matrix
 #' @description Partition the set of traits into blocks of correlated traits using hierarchical clustering.
 #' @param cormat A named k by k correlation matrix of z-statistics with row and column names being the names of studies/traits.
