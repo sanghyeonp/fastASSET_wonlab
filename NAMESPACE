@@ -2,4 +2,5 @@
 
 export(create_blocks)
 export(fast_asset)
+export(fast_asset_wonlab)
 import(ASSET)
