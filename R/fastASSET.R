@@ -131,6 +131,8 @@ fast_asset <- function(snp, traits.lab, beta.hat, sigma.hat, Neff, cor, block, s
 
         betahat_orth <- dt_scr$betahat_orth
         sigma_orth <- dt_scr$sigma_orth
+        print(sigma_orth)
+        print(2/sigma_orth^2)
         traits_i <- names(betahat_orth)
         rm(dt_scr)
 
